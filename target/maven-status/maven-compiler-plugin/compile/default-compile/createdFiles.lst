@@ -1,0 +1,3 @@
+dev\langchain4j\example\mcp\Bot.class
+dev\langchain4j\example\mcp\McpToolsExampleOverHttp.class
+dev\langchain4j\example\mcp\McpToolsExampleOverStdio.class

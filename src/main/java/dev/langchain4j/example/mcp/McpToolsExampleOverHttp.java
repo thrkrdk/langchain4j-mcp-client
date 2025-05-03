@@ -6,7 +6,6 @@ import dev.langchain4j.mcp.client.McpClient;
 import dev.langchain4j.mcp.client.transport.McpTransport;
 import dev.langchain4j.mcp.client.transport.http.HttpMcpTransport;
 import dev.langchain4j.model.chat.ChatLanguageModel;
-import dev.langchain4j.model.chat.request.ResponseFormat;
 import dev.langchain4j.model.ollama.OllamaChatModel;
 import dev.langchain4j.service.AiServices;
 import dev.langchain4j.service.tool.ToolProvider;
@@ -18,36 +17,58 @@ public class McpToolsExampleOverHttp {
 
     public static void main(String[] args) throws Exception {
 
+        // 1- Change Ollama  url by using kaggle and ngrok
+        // 2- Run Demo image in podman in SSE mode. Get the SSE URL from the podman image.
+        // 3- Create ChatLanguageModel for Ollama
+        // 4- Create Transport for MCP with SSE URL
+        // 5- Create MCP Client
+        // 6- MCP server needs ToolProvider to get the tools from the server.
+        // 7- Create an aiservices instance with Bot type.
+        // 8- Call the assistant with a tool.
+
+        // create ChatLanguageModel for Ollama
         ChatLanguageModel model = OllamaChatModel.builder()
-                .baseUrl("https://b63f-34-134-17-125.ngrok-free.app/")
+                .baseUrl("write here ollama url")
                 .modelName("qwen2.5-coder:14b")
-                .logRequests(true)
-                .logResponses(true)
                 .build();
 
+        // Create Transport for MCP with SSE URL
         McpTransport transport = new HttpMcpTransport.Builder()
-                .sseUrl("http://localhost:8080/sse")
-                .timeout(Duration.ofMinutes(1))
-                .logRequests(true)
-                .logResponses(true)
+                .sseUrl("Write SSE URl")  // get SSE URL from the podman image. Usually it is http://localhost:8000/sse
+                .timeout(Duration.ofMinutes(1))  // Langchain4j or SSE server can be throwing timeout exception.
                 .build();
 
+        transport.checkHealth();
+
+
+        // Create MCP Client
         McpClient mcpClient = new DefaultMcpClient.Builder()
                 .transport(transport)
                 .build();
 
+        mcpClient.checkHealth(); // for timeout exception. check if the server is up and running. not mandatory.
+
+        // Default prompts are loaded from the MCP server. If prompts are not provided from the server, List will be null.
+        mcpClient.listPrompts();
+        // All resources are loaded from the MCP server. If resources are not provided from the server, List will be null.
+        mcpClient.listResources();
+
+
+        // MCP server needs ToolProvider to get the tools from the server.
         ToolProvider toolProvider = McpToolProvider.builder()
                 .mcpClients(List.of(mcpClient))
                 .build();
 
+
+        // Create an aiservices instance with Bot type.
         Bot assistant = AiServices.builder(Bot.class)
                 .chatLanguageModel(model)
-                .toolProvider(toolProvider)
+                .toolProvider(toolProvider) // tools list are added to the assistant.
                 .build();
 
 
+        // Call the assistant with a tool.
         String chat = assistant.chat("Get the information of the number 1 star war character");
-       // String chat = assistant.chat("sum of 8+99 Use the provided tool to answer and always assume that the tool is correct.");
 
         System.out.println("Chat: " + chat);
 

@@ -13,37 +13,25 @@ import dev.langchain4j.service.tool.ToolProvider;
 import java.util.List;
 
 public class McpToolsExampleOverStdio {
-
-    // We will let the AI read the contents of this file
-    public static final String FILE_TO_BE_READ = "src/main/resources/file.txt";
-
-    /**
-     * This example uses the `server-filesystem` MCP server to showcase how
-     * to allow an LLM to interact with the local filesystem.
-     * <p>
-     * Running this example requires npm to be installed on your machine,
-     * because it spawns the `server-filesystem` as a subprocess via npm:
-     * `npm exec @modelcontextprotocol/server-filesystem@0.6.2`.
-     * <p>
-     * Of course, feel free to swap out the server with any other MCP server.
-     * <p>
-     * The communication with the server is done directly via stdin/stdout.
-     * <p>
-     * IMPORTANT: when executing this, make sure that the working directory is
-     * equal to the root directory of the project
-     * (`langchain4j-examples/mcp-example`), otherwise the program won't be able to find
-     * the proper file to read. If you're working from another directory,
-     * adjust the path inside the StdioMcpTransport.Builder() usage in the main method.
-     */
     public static void main(String[] args) throws Exception {
 
+        // 1- Change Ollama  url by using kaggle and ngrok
+        // 2- Run Demo image in podman in STDIO mode.
+        // 3- Create ChatLanguageModel for Ollama
+        // 4- Create Transport for MCP with STDIO
+
+        // 5- Create MCP Client
+        // 6- MCP server needs ToolProvider to get the tools from the server.
+        // 7- Create an aiservices instance with Bot type.
+        // 8- Call the assistant with a tool.
+
+        // create ChatLanguageModel for Ollama
         ChatLanguageModel model = OllamaChatModel.builder()
-                .baseUrl("https://b63f-34-134-17-125.ngrok-free.app/")
+                .baseUrl("write here ollama url")
                 .modelName("qwen2.5-coder:14b")
-//                .logRequests(true)
-//                .logResponses(true)
                 .build();
 
+        // Create Transport for MCP with STDIO. Add create podman image command.
         McpTransport transport = new StdioMcpTransport.Builder()
                 .command(List.of(
                         "podman",
@@ -52,24 +40,35 @@ public class McpToolsExampleOverStdio {
                         "--rm",
                         "configcius-mcp"
                 ))
-                .logEvents(true)
                 .build();
 
+        // Create MCP Client
         McpClient mcpClient = new DefaultMcpClient.Builder()
                 .transport(transport)
                 .build();
 
+        mcpClient.checkHealth(); // for timeout exception. check if the server is up and running. not mandatory.
+
+        // Default prompts are loaded from the MCP server. If prompts are not provided from the server, List will be null.
+        mcpClient.listPrompts();
+        // All resources are loaded from the MCP server. If resources are not provided from the server, List will be null.
+        mcpClient.listResources();
+
+
+        // MCP server needs ToolProvider to get the tools from the server.
         ToolProvider toolProvider = McpToolProvider.builder()
                 .mcpClients(List.of(mcpClient))
                 .build();
 
+        // Create an aiservices instance with Bot type.
         Bot bot = AiServices.builder(Bot.class)
                 .chatLanguageModel(model)
-                .toolProvider(toolProvider)
+                .toolProvider(toolProvider) // add tool provider to the bot
                 .build();
 
+        // Call the assistant with a tool.
         String chat = bot.chat("Get the information of the number 1 star war character");
+
         System.out.println("Chat: " + chat);
-        // String chat = bot.chat("sum of 8+99 Use the provided tool to answer and always assume that the tool is correct.");
     }
 }
