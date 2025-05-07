@@ -25,6 +25,8 @@ public class McpToolsExampleOverStdio {
         // 7- Create an aiservices instance with Bot type.
         // 8- Call the assistant with a tool.
 
+        // 9- Importan: put debug dev.langchain4j.mcp.client.transport.stdio.ProcessIOHandler.run for error
+
         // create ChatLanguageModel for Ollama
         ChatLanguageModel model = OllamaChatModel.builder()
                 .baseUrl("write here ollama url")
@@ -38,7 +40,7 @@ public class McpToolsExampleOverStdio {
                         "run",
                         "-i",
                         "--rm",
-                        "configcius-mcp"
+                        "swapi-mcp-starter"
                 ))
                 .build();
 
@@ -50,9 +52,9 @@ public class McpToolsExampleOverStdio {
         mcpClient.checkHealth(); // for timeout exception. check if the server is up and running. not mandatory.
 
         // Default prompts are loaded from the MCP server. If prompts are not provided from the server, List will be null.
-        mcpClient.listPrompts();
+        // mcpClient.listPrompts();  // spring boot'ta kısım çalışmıyor. büyük ihtimal register yapamadım :)
         // All resources are loaded from the MCP server. If resources are not provided from the server, List will be null.
-        mcpClient.listResources();
+        // mcpClient.listResources();  //  spring boot'ta  bu kısım çalışmıyor. büyük ihtimal register yapamadım :)
 
 
         // MCP server needs ToolProvider to get the tools from the server.
@@ -67,7 +69,7 @@ public class McpToolsExampleOverStdio {
                 .build();
 
         // Call the assistant with a tool.
-        String chat = bot.chat("Get the information of the number 1 star war character");
+        String chat = bot.chat("Get the information of the number 1 star war character. Always use tool result in your response.");
 
         System.out.println("Chat: " + chat);
     }

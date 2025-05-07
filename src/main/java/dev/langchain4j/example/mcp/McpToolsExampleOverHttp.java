@@ -34,7 +34,7 @@ public class McpToolsExampleOverHttp {
 
         // Create Transport for MCP with SSE URL
         McpTransport transport = new HttpMcpTransport.Builder()
-                .sseUrl("Write SSE URl")  // get SSE URL from the podman image. Usually it is http://localhost:8000/sse
+                .sseUrl("Write SSE URl")  // get SSE URL from the podman image. Usually it is http://localhost:8080/sse
                 .timeout(Duration.ofMinutes(1))  // Langchain4j or SSE server can be throwing timeout exception.
                 .build();
 
@@ -49,9 +49,10 @@ public class McpToolsExampleOverHttp {
         mcpClient.checkHealth(); // for timeout exception. check if the server is up and running. not mandatory.
 
         // Default prompts are loaded from the MCP server. If prompts are not provided from the server, List will be null.
-        mcpClient.listPrompts();
+        // mcpClient.listPrompts(); //  spring boot'ta  bu kısım çalışmıyor. büyük ihtimal register yapamadım :)
+
         // All resources are loaded from the MCP server. If resources are not provided from the server, List will be null.
-        mcpClient.listResources();
+        // mcpClient.listResources(); //  spring boot'ta  bu kısım çalışmıyor. büyük ihtimal register yapamadım :)
 
 
         // MCP server needs ToolProvider to get the tools from the server.
@@ -68,7 +69,7 @@ public class McpToolsExampleOverHttp {
 
 
         // Call the assistant with a tool.
-        String chat = assistant.chat("Get the information of the number 1 star war character");
+        String chat = assistant.chat("Get the information of the number 1 star war character. Always use tool result in your response.");
 
         System.out.println("Chat: " + chat);
 
