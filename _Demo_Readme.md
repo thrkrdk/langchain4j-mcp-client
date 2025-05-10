@@ -14,7 +14,7 @@ Check the `anythingllm_mcp_servers.json` file and show users the contents of thi
 - Then ask the same question with the "@agent" command.
 
 ## CodeAsistan (VsCode, Intellij)
-### Local Coding LMM (Intellij)
+### - Local Coding LMM (Intellij)
 - Configure `DevoxxGenie` for local LLM.
 - `swapi-mcp-starter`
   - Check podman is running container
@@ -24,11 +24,11 @@ Check the `anythingllm_mcp_servers.json` file and show users the contents of thi
 - `Jira MCP` server
 - `Postgresql MCP` Server
 
-### Github Copilot (VS code)
+### - (Optional) Github Copilot (VS code)
  - Show MCP settings
  - `Github MCP` server
 
-### Windsurf Copilot (Vs code)
+### - (Optional) Windsurf Copilot (Vs code)
  - Show MCP settings
  - `Github MCP` server
  
