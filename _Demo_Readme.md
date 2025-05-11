@@ -8,6 +8,13 @@ Check the `anythingllm_mcp_servers.json` file and show users the contents of thi
 - First ask `who am I?` and see the LLM answer.
 - Then ask the same question with the `@agent` command.
 ### postgresql-mcp-server
+Postgresql DB Sever and Postgresql MCP Stdio Server run in podman. to avoid an error, run the docker image in this network.
+Here is a sample Podman code
+```sh
+podman network create mcp-net
+podman run -d   --name pg-world   --network mcp-net   --network-alias pg-world ghusta/postgres-world-db:2.12
+podman run -i --rm  postgresql-mcp-server-stdio --network mcp-net -e DATABASE_URL=jdbc:postgresql://pg-world:5432/world-db -e DATABASE_USERNAME=world -e  "DATABASE_PASSWORD=world123 postgresql-mcp-server-stdio
+``` 
 - Create network in podman.  `podman network create mcp-net`
 - Run postgresql db server in podman. `podman run -d   --name pg-world   --network mcp-net   --network-alias pg-world ghusta/postgres-world-db:2.12`
 - Check db is running in podman
@@ -32,7 +39,7 @@ Check the `anythingllm_mcp_servers.json` file and show users the contents of thi
   - Then ask the same question with the `@agent` command.
 - `postgresql-mcp-server` in sse mode
   - Run postgresql db server in podman. `podman run -d   --name pg-world   --network mcp-net   --network-alias pg-world ghusta/postgres-world-db:2.12`
-  - Run postgresql-mcp-server in sse mode in podman. `podman run -i   --name postgresql-mcp-server   -p 8080:8080   --network mcp-net   -e DATABASE_URL=jdbc:postgresql://pg-world:5432/world-db   -e DATABASE_USERNAME=world   -e DATABASE_PASSWORD=world123   postgresql-mcp-server`
+  - Run postgresql-mcp-server in sse mode in podman. `podman run -i   --name postgresql-mcp-server-sse   -p 8080:8080   --network mcp-net   -e DATABASE_URL=jdbc:postgresql://pg-world:5432/world-db   -e DATABASE_USERNAME=world   -e DATABASE_PASSWORD=world123   postgresql-mcp-server-sse`
   - Go to settings on  "DevoxxGenie". Connect MCP server in SSE mode. Url is `http://localhost:8080/sse`
   - Fetch all tools from server
   - Question-1: with the `@agent` command these prompts `What tables are available in the database?`
