@@ -40,7 +40,7 @@ public class McpToolsExampleOverStdio {
                         "run",
                         "-i",
                         "--rm",
-                        "swapi-mcp-starter"
+                        "swapi-mcp-starter-stdio"
                 ))
                 .build();
 
