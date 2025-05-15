@@ -21,7 +21,7 @@ podman run -i --rm  postgresql-mcp-server-stdio --network mcp-net -e DATABASE_UR
 - Check `postgresql-mcp-server` agent is ready in AnythingLLM settings.
 - Check podman is running container
 - Show all tools in the postgresql_mcp_server 
-- Question-1: with the `@agent` command these prompts `What tables are available in the database?`
+- Question-1: Start with the @agent command and write this prompt: "What tables are available in the database?"
 - Follow Up Question: `How many records are in the orders table?`
   
 ### - youtube-video-summarizer
