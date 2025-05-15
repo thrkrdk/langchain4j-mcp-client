@@ -69,7 +69,8 @@ public class McpToolsExampleOverHttp {
 
 
         // Call the assistant with a tool.
-        String chat = assistant.chat("Get the information of the number 1 star war character. Always use tool result in your response.");
+        String chat = assistant.chat("Who am I");
+        // String chat = assistant.chat("Get the information of the number 1 star war character. Always use tool result in your response.");
 
         System.out.println("Chat: " + chat);
 

@@ -69,7 +69,8 @@ public class McpToolsExampleOverStdio {
                 .build();
 
         // Call the assistant with a tool.
-        String chat = bot.chat("Get the information of the number 1 star war character. Always use tool result in your response.");
+        String chat = bot.chat("Do you know anything about me?");
+        // String chat = bot.chat("Get the information of the number 1 star war character. Always use tool result in your response.");
 
         System.out.println("Chat: " + chat);
     }
