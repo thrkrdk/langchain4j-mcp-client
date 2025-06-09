@@ -3,6 +3,8 @@ package dev.langchain4j.example.mcp;
 import dev.langchain4j.mcp.McpToolProvider;
 import dev.langchain4j.mcp.client.DefaultMcpClient;
 import dev.langchain4j.mcp.client.McpClient;
+import dev.langchain4j.mcp.client.McpGetPromptResult;
+import dev.langchain4j.mcp.client.McpReadResourceResult;
 import dev.langchain4j.mcp.client.transport.McpTransport;
 import dev.langchain4j.mcp.client.transport.http.HttpMcpTransport;
 import dev.langchain4j.model.chat.ChatModel;
@@ -12,6 +14,7 @@ import dev.langchain4j.service.tool.ToolProvider;
 
 import java.time.Duration;
 import java.util.List;
+import java.util.Map;
 
 public class McpToolsExampleOverHttp {
 
@@ -52,11 +55,18 @@ public class McpToolsExampleOverHttp {
 
         mcpClient.checkHealth(); // for timeout exception. check if the server is up and running. not mandatory.
 
-        // Default prompts are loaded from the MCP server. If prompts are not provided from the server, List will be null.
-        // mcpClient.listPrompts(); //  spring boot'ta  bu kısım çalışmıyor. büyük ihtimal register yapamadım :)
 
-        // All resources are loaded from the MCP server. If resources are not provided from the server, List will be null.
-        // mcpClient.listResources(); //  spring boot'ta  bu kısım çalışmıyor. büyük ihtimal register yapamadım :)
+        // prompt example
+        Map<String, Object> arguments = Map.of(
+                "name", "Ayşe",
+                "age", 28,
+                "interests", "kitap okumak, yoga"
+        );
+
+        McpGetPromptResult prompt = mcpClient.getPrompt("personalized-message", arguments);
+
+        // resource example
+        McpReadResourceResult mcpReadResourceResult = mcpClient.readResource("user-profile://ahmet");
 
 
         // MCP server needs ToolProvider to get the tools from the server.
