@@ -5,7 +5,7 @@ import dev.langchain4j.mcp.client.DefaultMcpClient;
 import dev.langchain4j.mcp.client.McpClient;
 import dev.langchain4j.mcp.client.transport.McpTransport;
 import dev.langchain4j.mcp.client.transport.http.HttpMcpTransport;
-import dev.langchain4j.model.chat.ChatLanguageModel;
+import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.ollama.OllamaChatModel;
 import dev.langchain4j.service.AiServices;
 import dev.langchain4j.service.tool.ToolProvider;
@@ -26,15 +26,19 @@ public class McpToolsExampleOverHttp {
         // 8- Call the assistant with a tool.
 
         // create ChatLanguageModel for Ollama
-        ChatLanguageModel model = OllamaChatModel.builder()
+        ChatModel model = OllamaChatModel.builder()
                 .baseUrl("write here ollama url")
                 .modelName("qwen2.5-coder:14b")
+                .logRequests(true)
+                .logResponses(true)
                 .build();
 
         // Create Transport for MCP with SSE URL
         McpTransport transport = new HttpMcpTransport.Builder()
                 .sseUrl("Write SSE URl")  // get SSE URL from the podman image. Usually it is http://localhost:8000/sse
                 .timeout(Duration.ofMinutes(1))  // Langchain4j or SSE server can be throwing timeout exception.
+                .logRequests(true)
+                .logResponses(true)
                 .build();
 
         transport.checkHealth();
@@ -61,7 +65,7 @@ public class McpToolsExampleOverHttp {
 
         // Create an aiservices instance with Bot type.
         Bot assistant = AiServices.builder(Bot.class)
-                .chatLanguageModel(model)
+                .chatModel(model)
                 .toolProvider(toolProvider) // tools list are added to the assistant.
                 .build();
 
