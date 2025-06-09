@@ -5,7 +5,7 @@ import dev.langchain4j.mcp.client.DefaultMcpClient;
 import dev.langchain4j.mcp.client.McpClient;
 import dev.langchain4j.mcp.client.transport.McpTransport;
 import dev.langchain4j.mcp.client.transport.stdio.StdioMcpTransport;
-import dev.langchain4j.model.chat.ChatLanguageModel;
+import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.ollama.OllamaChatModel;
 import dev.langchain4j.service.AiServices;
 import dev.langchain4j.service.tool.ToolProvider;
@@ -28,13 +28,16 @@ public class McpToolsExampleOverStdio {
         // 9- Importan: put debug dev.langchain4j.mcp.client.transport.stdio.ProcessIOHandler.run for error
 
         // create ChatLanguageModel for Ollama
-        ChatLanguageModel model = OllamaChatModel.builder()
+        ChatModel model = OllamaChatModel.builder()
                 .baseUrl("write here ollama url")
                 .modelName("qwen2.5-coder:14b")
+                .logRequests(true)
+                .logResponses(true)
                 .build();
 
         // Create Transport for MCP with STDIO. Add create podman image command.
         McpTransport transport = new StdioMcpTransport.Builder()
+                .logEvents(true)
                 .command(List.of(
                         "podman",
                         "run",
@@ -64,7 +67,7 @@ public class McpToolsExampleOverStdio {
 
         // Create an aiservices instance with Bot type.
         Bot bot = AiServices.builder(Bot.class)
-                .chatLanguageModel(model)
+                .chatModel(model)
                 .toolProvider(toolProvider) // add tool provider to the bot
                 .build();
 
