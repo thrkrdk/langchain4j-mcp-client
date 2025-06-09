@@ -2,8 +2,8 @@
 Check your local LLM settings and make sure that it is up and runnin.
 ## AnythingLLM Demo
 Check the `anythingllm_mcp_servers.json` file and show users the contents of this file.
-### - swapi-mcp-starter
-- Check `swapi-mcp-starter` agent is ready in AnythingLLM settings.
+### - springboot-mcp-starter
+- Check `springboot-mcp-starter` agent is ready in AnythingLLM settings.
 - Check podman is running container
 - First ask `who am I?` and see the LLM answer.
 - Then ask the same question with the `@agent` command.
@@ -33,7 +33,7 @@ podman run -i --rm  postgresql-mcp-server-stdio --network mcp-net -e DATABASE_UR
 ## CodeAsistan (VsCode, Intellij)
 ### - Local Coding LMM (Intellij)
 - Configure `DevoxxGenie` for local LLM.
-- `swapi-mcp-starter`
+- `springboot-mcp-starter`
   - Check podman is running container
   - First ask `who am I?` and see the LLM answer.
   - Then ask the same question with the `@agent` command.
