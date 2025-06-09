@@ -27,15 +27,15 @@ public class McpToolsExampleOverHttp {
 
         // create ChatLanguageModel for Ollama
         ChatModel model = OllamaChatModel.builder()
-                .baseUrl("write here ollama url")
-                .modelName("qwen2.5-coder:14b")
+                .baseUrl("https://9773-34-127-113-117.ngrok-free.app/")
+                .modelName("qwen3:14b")
                 .logRequests(true)
                 .logResponses(true)
                 .build();
 
         // Create Transport for MCP with SSE URL
         McpTransport transport = new HttpMcpTransport.Builder()
-                .sseUrl("Write SSE URl")  // get SSE URL from the podman image. Usually it is http://localhost:8000/sse
+                .sseUrl("http://localhost:8080/sse")  // get SSE URL from the podman image. Usually it is http://localhost:8080/sse
                 .timeout(Duration.ofMinutes(1))  // Langchain4j or SSE server can be throwing timeout exception.
                 .logRequests(true)
                 .logResponses(true)
@@ -72,6 +72,7 @@ public class McpToolsExampleOverHttp {
 
         // Call the assistant with a tool.
         String chat = assistant.chat("Get the information of the number 1 star war character");
+        // String chat = assistant.chat("Do know me");
 
         System.out.println("Chat: " + chat);
 
