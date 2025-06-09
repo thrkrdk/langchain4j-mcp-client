@@ -1,6 +1,6 @@
 package dev.langchain4j.example.mcp;
 
-import dev.langchain4j.model.chat.ChatLanguageModel;
+import dev.langchain4j.model.chat.ChatModel;
 import dev.langchain4j.model.ollama.OllamaChatModel;
 import dev.langchain4j.service.AiServices;
 
@@ -13,7 +13,7 @@ public class McpToolsExampleOverHttp {
         // 3- Ask For the information of the number 1 star war character
 
         // Create ChatLanguageModel For ollama
-        ChatLanguageModel model = OllamaChatModel.builder()
+        ChatModel model = OllamaChatModel.builder()
                 .baseUrl("add here ollama server url") // todo: add here ollama server url by using kaggle and ngrok
                 .modelName("qwen2.5-coder:14b")
                 .build();
@@ -21,7 +21,7 @@ public class McpToolsExampleOverHttp {
 
         // Create AI service with Bot type.
         Bot assistant = AiServices.builder(Bot.class)
-                .chatLanguageModel(model)
+                .chatModel(model)
                 .build();
 
 
