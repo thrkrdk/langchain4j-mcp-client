@@ -29,8 +29,8 @@ public class McpToolsExampleOverStdio {
 
         // create ChatLanguageModel for Ollama
         ChatModel model = OllamaChatModel.builder()
-                .baseUrl("write here ollama url")
-                .modelName("qwen2.5-coder:14b")
+                .baseUrl("https://9773-34-127-113-117.ngrok-free.app/")
+                .modelName("qwen3:14b")
                 .logRequests(true)
                 .logResponses(true)
                 .build();
@@ -43,7 +43,7 @@ public class McpToolsExampleOverStdio {
                         "run",
                         "-i",
                         "--rm",
-                        "swapi-mcp-starter-stdio"
+                        "springboot-mcp-starter-stdio"
                 ))
                 .build();
 

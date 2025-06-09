@@ -28,8 +28,8 @@ public class McpToolsExampleOverHttp {
 
         // create ChatLanguageModel for Ollama
         ChatModel model = OllamaChatModel.builder()
-                .baseUrl("https://8b66-35-232-97-5.ngrok-free.app/")
-                .modelName("qwen2.5-coder:14b")
+                .baseUrl("https://9773-34-127-113-117.ngrok-free.app/")
+                .modelName("qwen3:14b")
                 .logRequests(true)
                 .logResponses(true)
                 .build();
