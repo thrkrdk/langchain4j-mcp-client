@@ -14,7 +14,7 @@ public class McpToolsExampleOverHttp {
 
         // Create ChatLanguageModel For ollama
         ChatModel model = OllamaChatModel.builder()
-                .baseUrl("add here ollama server url") // todo: add here ollama server url by using kaggle and ngrok
+                .baseUrl("https://94c7-34-127-113-117.ngrok-free.app") // todo: add here ollama server url by using kaggle and ngrok
                 .modelName("qwen2.5-coder:14b")
                 .build();
 
@@ -26,7 +26,8 @@ public class McpToolsExampleOverHttp {
 
 
         // Ask for the information of the number 1 star war character to the assistant
-        String chat = assistant.chat("Get the information of the number 1 star war character");
+        // String chat = assistant.chat("Get the information of the number 1 star war character");
+        String chat = assistant.chat("Do you know me?");
 
         System.out.println("Chat: " + chat);
 
